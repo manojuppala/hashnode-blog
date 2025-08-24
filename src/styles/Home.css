@@ -1,0 +1,7 @@
+@import "./index.css";
+
+.logo {
+  min-width: 5rem;
+  max-width: 10rem;
+  margin: 0.8rem auto;
+}
