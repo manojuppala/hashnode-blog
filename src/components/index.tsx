@@ -7,3 +7,5 @@ export { default as BlogCard } from "./BlogCard"
 export { default as Link } from "./atoms/Link";
 export { default as Loader } from "./Loader";
 export { default as Image } from "./Image";
+export { default as FormattedHTML } from "./FormattedHTML";
+export { default as Newsletter } from "./Newsletter";

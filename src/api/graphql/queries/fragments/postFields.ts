@@ -33,4 +33,9 @@ export default `
         title
         description
       }
+      author {
+        id
+        username
+        name
+      }
 `;

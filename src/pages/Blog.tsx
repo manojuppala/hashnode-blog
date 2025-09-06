@@ -8,7 +8,7 @@ const Blog = (): JSX.Element => {
 useEffect(() => {
     const fetchData = async () => {
       try{
-      const posts = await getPublication({ count: 10 });
+      const posts = await getPublication({ count: 11 });
       setPosts((posts ?? []) as PostType[]);
       } catch (error) {
       console.error(error);
@@ -23,7 +23,7 @@ useEffect(() => {
     <Fragment>
       <Searchbar/>
       {posts.length ? 
-      (<div className="card-deck">
+      (<div className="card-deck card-deck-flex">
         {posts.map((post, id) => {
           return <BlogCard key={id} {...post} />;
         })}

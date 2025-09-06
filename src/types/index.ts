@@ -32,4 +32,9 @@ export type Post = {
     slug: string;
   }[];
   withImage: boolean;
+  author: {
+    id: string;
+    name: string;
+    username: string;
+  };
 };

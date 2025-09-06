@@ -1,14 +1,14 @@
 import { type JSX } from "react";
 import { Link, useLocation } from "react-router-dom";
-import moment from'moment';
+import moment from 'moment';
 import { Badge } from "./atoms";
 import type { Post as PostType } from "../types";
 import '../styles/BlogCard.css';
 
 const BlogCard = (props: PostType): JSX.Element => {
   const { title, brief, coverImage: { url:coverImg } = {}, publishedAt, readTimeInMinutes, tags, slug, withImage = false } = props;
-    const formattedDate = moment(publishedAt).format('MMM D, YYYY');
-     const location = useLocation();
+  const formattedDate = moment(publishedAt).format('MMM D, YYYY');
+  const location = useLocation();
   const currentNav = location?.pathname?.split("/")[1];
   const toLink = (currentNav === "blog") ? slug : `blog/${slug}`;
   return (

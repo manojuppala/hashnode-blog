@@ -1,21 +1,17 @@
-import { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import "highlight.js/styles/github-dark-dimmed.css";
-import hljs from "highlight.js";
+import { Routes, Route } from "react-router-dom";
 import { Footer, Navbar } from './components';
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import { useLocation } from "react-router-dom";
+
 
 function App() {
-    const location = useLocation();
-    useEffect(() => {
-    hljs.highlightAll();
-  }, [location]);
-
+  const location = useLocation();
+  const isBlogPost = location.pathname.startsWith("/blog/") && location.pathname !== "/blog/";
   return (
     <>
-      <Navbar />
+      {!isBlogPost ? <Navbar /> : null}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
@@ -26,4 +22,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

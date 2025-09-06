@@ -3,7 +3,7 @@ const Searchbar = () => {
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark searchbar">
       <div className="input-group col-md-5 mx-auto">
         <input
-          className="form-control text-color bg-dark input-query"
+          className="form-control text-light bg-dark input-query"
           type="search"
           placeholder="Search"
           aria-label="Search"

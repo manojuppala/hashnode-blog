@@ -19,6 +19,9 @@
 .bg-dark {
   background-color: var(--background) !important;
 }
+.text-light {
+  color: var(--text-color) !important;
+}
 .card {
   background-color: var(--background) !important;
 }
@@ -92,9 +95,15 @@
   box-shadow: none;
 }
 
+.page-item.active .page-link,
 .page-item.active :hover,
 .page-item.active :focus {
   background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.page-item .page-link {
+  color: var(--primary);
 }
 
 .page-item.disabled .page-link {
@@ -117,4 +126,9 @@ textarea.input-query {
 
 .rounded-circle {
   width: 40px;
+}
+
+.breadcrumb {
+  background-color: var(--background);
+  margin: 1.5rem 0;
 }

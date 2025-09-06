@@ -6,6 +6,8 @@
   --pre-max-width: 45rem;
   --primary: #539bf5;
   --badge-color: #28a745;
+  --badge-background: #28a7452a;
+  --badge-background-hvr: #28a7454a;
   --copy-background: #373e47;
   --copy-background-hover: #444c56;
   --copy-border-hover: #768390;
@@ -27,6 +29,8 @@
   --pre-max-width: 45rem;
   --primary: #539bf5;
   --badge-color: #28a745;
+  --badge-background: #28a7452a;
+  --badge-background-hvr: #28a7454a;
   --copy-background: #f6f8fa;
   --copy-background-hover: #f3f4f6;
   --copy-border-hover: #d0d7de;
@@ -139,14 +143,12 @@ blockquote {
   border-left: 0.25em solid var(--border);
 }
 
-h1{
+h1,h2,h3,p {
   color: var(--text-color);
 }
-h3{
-  color: var(--text-color);
-}
-p{
-  color: var(--text-color);
+
+h1,h2,h3 {
+  margin-top: 1.5rem;
 }
 
 a {
