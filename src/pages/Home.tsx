@@ -10,7 +10,7 @@ const Home = (): JSX.Element => {
 useEffect(() => {
     const fetchData = async () => {
       try{
-      const posts = await getPublication({ count: 3 });
+      const posts = await getPublication({ count: 2 });
       setPosts((posts ?? []) as PostType[]);
       } catch (error) {
       console.error(error);
@@ -31,15 +31,19 @@ useEffect(() => {
           Email: <a href="mailto:contact@manojuppala.com">contact@manojuppala.com</a>
         </p>
       </div>
-      {posts.length ? <div>
-        <h2 className="mb-3">Recent Blogs</h2>
-        <div className="card-deck">
-          {posts.map((post, id) => {
-            return <BlogCard key={id} {...post} withImage />;
-          })}
+      {posts.length ? 
+      <>
+        <div>
+          <h2 className="mb-3">Recent Blogs</h2>
+          <div className="card-deck">
+            {posts.map((post, id) => {
+              return <BlogCard key={id} {...post} withImage />;
+            })}
+          </div>
         </div>
-      </div> : <Loader />}
-      <Newsletter />
+        <Newsletter />
+      </>
+      : <Loader />}
     </Fragment>
   );
 };

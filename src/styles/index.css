@@ -137,7 +137,7 @@ code {
 }
 
 /* blockquote */
-blockquote {
+blockquote p{
   padding: 0 1em;
   color: var(--blockquote);
   border-left: 0.25em solid var(--border);

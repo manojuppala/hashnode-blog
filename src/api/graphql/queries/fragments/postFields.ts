@@ -37,5 +37,9 @@ export default `
         id
         username
         name
+        socialMediaLinks {
+        website
+        github
+        }
       }
 `;

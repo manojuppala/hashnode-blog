@@ -8,7 +8,7 @@ const Blog = (): JSX.Element => {
 useEffect(() => {
     const fetchData = async () => {
       try{
-      const posts = await getPublication({ count: 11 });
+      const posts = await getPublication({ count: 10 });
       setPosts((posts ?? []) as PostType[]);
       } catch (error) {
       console.error(error);

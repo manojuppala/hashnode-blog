@@ -3,6 +3,7 @@ import { Footer, Navbar } from './components';
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import PageNotFound from "./pages/PageNotFound";
 import { useLocation } from "react-router-dom";
 
 
@@ -16,6 +17,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/*" element={<BlogPost />} />
+        {/* Catch-all route for 404 */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </>

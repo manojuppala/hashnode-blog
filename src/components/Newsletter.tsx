@@ -1,4 +1,10 @@
+import { subscribeToNewsletter }  from "../api/graphql";
+import { useAppStore } from "../store";
+
 const Newsletter = () => {
+  const  status  = useAppStore((state) => state.newsletterStatus);
+  const  errorMsg  = useAppStore((state) => state.newsletterErrorMsg);
+  console.log({ status, errorMsg });
   return (
     <div className="container text-center">
         <h2 className="mb-3">Subscribe to our newsletter</h2>
@@ -13,7 +19,12 @@ const Newsletter = () => {
                 aria-label="newsletter"
               />
             </div>
-            <button className="btn btn-primary" type="submit">Subscribe</button>
+            <button className="btn btn-primary" type="submit" onClick={async () => {
+              const email = (document.querySelector('.input-query') as HTMLInputElement)?.value;
+              if (email.trim()) {
+                await subscribeToNewsletter({ email });
+              }
+            }}><b>Subscribe</b></button>
           </div>
       </div>
   );

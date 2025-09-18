@@ -10,6 +10,13 @@
   border: 1px solid var(--border) !important;
 }
 
+.btn-primary:hover {
+  background-color: var(--copy-background-hover) !important;
+  color: var(--copy-border-hover) !important;
+  border: 1px solid var(--copy-border-hover) !important;
+  transition-duration: 0.1s
+}
+
 /* set a max-width for horizontal fluid layout and make it centered */
 .container-fluid {
   margin-right: auto;

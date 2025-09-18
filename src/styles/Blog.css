@@ -55,6 +55,7 @@
   vertical-align: middle;
   border-radius: 99999px;
   margin-left: 4px;
+  cursor: pointer;
 }
 
 .badge.badge-success {
@@ -91,4 +92,17 @@
   white-space: nowrap;
   flex: 1;
   min-width: 0
+}
+
+.blog-content-html {
+  width: 85%;
+  border: 1px solid var(--primary);
+  margin: auto !important;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .blog-content-html {
+    width: 100%; /* or any width you prefer for mobile */
+  }
 }

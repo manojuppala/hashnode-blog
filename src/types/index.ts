@@ -1,9 +1,16 @@
 export type Publication = {
   publication?: {
+    id?: string;
     posts?: {
       edges?: { node: unknown }[];
     };
     post?: Post;
+  };
+};
+
+export type Newsletter = {
+  subscribeToNewsletter?: {
+    status?: string;
   };
 };
 
@@ -36,5 +43,9 @@ export type Post = {
     id: string;
     name: string;
     username: string;
+    socialMediaLinks?: {
+      website?: string;
+      github?: string;
+    };
   };
 };

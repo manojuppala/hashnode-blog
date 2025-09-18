@@ -26,8 +26,39 @@ const BlogPost = (): JSX.Element => {
   const [post, setPost] = useState<PostType>({} as PostType);
 
   const { publishedAt, readTimeInMinutes, coverImage, title, subtitle, author, tags } = post;
+  const userURL = author?.socialMediaLinks?.website || author?.socialMediaLinks?.github || "";
   const formattedDate = moment(publishedAt).format('MMM D, YYYY');
   const contentHtml = post?.content?.html;
+
+  const htmlToRender = (
+  <>
+    <div>
+          {coverImage?.url ? 
+          <Image
+            className="cover-img"
+            src={coverImage?.url}
+            center
+            alt={title}
+          /> : null}
+          <div className="container text-center">
+          <p className="blog-meta mt-2"><a href={userURL} target="_blank" rel="noopener noreferrer">
+            {author?.name}</a> • {formattedDate} • {readTimeInMinutes} min read
+          </p>
+        </div>
+          <div>
+            <h1>{title}</h1>
+            <p className="subtitle">{subtitle}</p>
+          </div>
+        <FormattedHTML htmlString={contentHtml} />
+        <div className="container text-center text-light">
+          Tags: {tags?.map(({ name }, id) => {
+            return <Badge key={id} text={name} />;
+          })}
+        </div>
+    </div>
+    <Newsletter />
+  </>);
+
   return (
     <Fragment>
       <title>{title}</title>
@@ -43,31 +74,7 @@ const BlogPost = (): JSX.Element => {
           </li>
         </ol>
       </nav>
-      {(Object.keys(post).length > 0) ? 
-      (<div>
-        {coverImage?.url ? 
-        <Image
-          className="cover-img"
-          src={coverImage?.url}
-          center
-          alt={title}
-        /> : null}
-        <div className="container text-center">
-        <p className="blog-meta mt-2"><a href="">{author?.name}</a> • {formattedDate} • {readTimeInMinutes} min read</p>
-      </div>
-        <div>
-          <h1>{title}</h1>
-          <p className="subtitle">{subtitle}</p>
-        </div>
-      <FormattedHTML htmlString={contentHtml} />
-      <div className="container text-center text-light">
-        Tags: {tags?.map(({ name }, id) => {
-          return <Badge key={id} text={name} />;
-        })}
-      </div>
-      </div>) 
-      : <Loader />}
-      <Newsletter />
+      {(Object.keys(post).length > 0) ? (htmlToRender) : <Loader />}
     </Fragment>
   )
 };
