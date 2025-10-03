@@ -2,8 +2,10 @@ import { Fragment, type JSX, useEffect, useState } from "react";
 import { getPostBySlug } from "../api/graphql";
 import { Link, useLocation } from "react-router-dom";
 import { Loader, Image, FormattedHTML, Newsletter } from "../components";
+import PageNotFound from "./PageNotFound";
 import { Badge } from "../components/atoms";
 import type { Post as PostType } from "../types";
+import { useAppStore } from "../store";
 import moment from 'moment';
 import '../styles/Blog.css';
 
@@ -24,14 +26,27 @@ const BlogPost = (): JSX.Element => {
   }, [location]);
 
   const [post, setPost] = useState<PostType>({} as PostType);
+  const  loading  = useAppStore((state) => state.loading);
 
-  const { publishedAt, readTimeInMinutes, coverImage, title, subtitle, author, tags } = post;
+  const { publishedAt, readTimeInMinutes, coverImage, title, subtitle, author, tags } = post || {};
   const userURL = author?.socialMediaLinks?.website || author?.socialMediaLinks?.github || "";
   const formattedDate = moment(publishedAt).format('MMM D, YYYY');
   const contentHtml = post?.content?.html;
 
   const htmlToRender = (
   <>
+  <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <Link to={"/blog"}>
+              Blog
+            </Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            {title}
+          </li>
+        </ol>
+      </nav>
     <div>
           {coverImage?.url ? 
           <Image
@@ -62,19 +77,7 @@ const BlogPost = (): JSX.Element => {
   return (
     <Fragment>
       <title>{title}</title>
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <Link to={"/blog"}>
-              Blog
-            </Link>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            {title}
-          </li>
-        </ol>
-      </nav>
-      {(Object.keys(post).length > 0) ? (htmlToRender) : <Loader />}
+      {post ? ((Object.keys(post).length > 0) && !loading ? (htmlToRender) : <Loader />) : <PageNotFound />}
     </Fragment>
   )
 };

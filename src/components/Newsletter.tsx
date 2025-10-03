@@ -4,6 +4,7 @@ import { useAppStore } from "../store";
 const Newsletter = () => {
   const  status  = useAppStore((state) => state.newsletterStatus);
   const  errorMsg  = useAppStore((state) => state.newsletterErrorMsg);
+  // eslint-disable-next-line no-console
   console.log({ status, errorMsg });
   return (
     <div className="container text-center">

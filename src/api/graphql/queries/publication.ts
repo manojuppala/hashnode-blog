@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query Publication($host: String!, $count: Int!) {
+  query Publication($host: String!, $count: Int!, $after: String) {
     publication(host: $host) {
       id
       title
-      posts(first: $count) {
+      posts(first: $count, after: $after) {
         edges {
           node {
             id
@@ -24,6 +24,11 @@ export default gql`
             }
           }
         }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        totalDocuments
       }
     }
   }

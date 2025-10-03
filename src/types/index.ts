@@ -3,8 +3,20 @@ export type Publication = {
     id?: string;
     posts?: {
       edges?: { node: unknown }[];
+      pageInfo?: {
+        hasNextPage?: boolean;
+        endCursor?: string;
+      };
+      totalDocuments?: number;
     };
     post?: Post;
+  };
+  searchPostsOfPublication?: {
+    edges?: { node: Post }[];
+    pageInfo?: {
+      hasNextPage?: boolean;
+      endCursor?: string;
+    };
   };
 };
 

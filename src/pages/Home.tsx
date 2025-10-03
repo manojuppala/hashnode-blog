@@ -1,25 +1,25 @@
-import { Fragment, type JSX, useEffect, useState } from "react";
+import { Fragment, type JSX, useEffect } from "react";
 import { BlogCard, Loader, Newsletter } from "../components";
 import { getPublication } from "../api/graphql";
-import type { Post as PostType } from "../types";
+import { useAppStore } from "../store";
 import logo from "../assets/mario.png";
 import '../styles/Home.css';
 
 const Home = (): JSX.Element => {
 
-useEffect(() => {
-    const fetchData = async () => {
-      try{
-      const posts = await getPublication({ count: 2 });
-      setPosts((posts ?? []) as PostType[]);
-      } catch (error) {
-      console.error(error);
-    }
-    };
-    fetchData();
-  }, []);
+  useEffect(() => {
+      const fetchData = async () => {
+        try{
+        await getPublication({ count: 2 });
+        } catch (error) {
+        console.error(error);
+      }
+      };
+      fetchData();
+    }, []);
 
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const  posts  = useAppStore((state) => state.homePosts);
+  const  loading  = useAppStore((state) => state.loading);
 
   return (
     <Fragment>
@@ -31,7 +31,7 @@ useEffect(() => {
           Email: <a href="mailto:contact@manojuppala.com">contact@manojuppala.com</a>
         </p>
       </div>
-      {posts.length ? 
+      {loading ? <Loader /> :
       <>
         <div>
           <h2 className="mb-3">Recent Blogs</h2>
@@ -42,8 +42,7 @@ useEffect(() => {
           </div>
         </div>
         <Newsletter />
-      </>
-      : <Loader />}
+      </>}
     </Fragment>
   );
 };

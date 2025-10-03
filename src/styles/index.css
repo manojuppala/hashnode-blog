@@ -204,3 +204,13 @@ img {
   right: 0;
   z-index: 1;
 }
+
+.clear-btn {
+  margin-left: -40px !important;
+  z-index: 100 !important;
+  color: var(--nav);
+}
+
+.clear-btn:hover {
+  color: var(--text-color);
+}
