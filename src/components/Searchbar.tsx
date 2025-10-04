@@ -13,6 +13,7 @@ const Searchbar = ({ postsPerPage = 10 }:{ postsPerPage: number }) => {
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark searchbar">
       <div className="input-group col-md-5 mx-auto">
         <input
+          name='blogSearch'
           className="form-control text-light bg-dark input-query"
           type="search"
           placeholder="Search"

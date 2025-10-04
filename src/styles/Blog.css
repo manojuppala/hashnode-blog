@@ -105,4 +105,8 @@
   .blog-content-html {
     width: 100%; /* or any width you prefer for mobile */
   }
+
+  .cover-img{
+    width: 100%; /* or any width you prefer for mobile */
+  }
 }

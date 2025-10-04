@@ -139,3 +139,13 @@ textarea.input-query {
   background-color: var(--background);
   margin: 1.5rem 0;
 }
+
+.alert-warning {
+  background-color: var(--alert-warning-bg);
+  color: var(--alert-text-color);
+  border: 1px solid var(--alert-warning-border);
+}
+
+.close:focus, .close:hover {
+  color: var(--alert-text-color);
+}

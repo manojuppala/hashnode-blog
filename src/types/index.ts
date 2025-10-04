@@ -61,3 +61,16 @@ export type Post = {
     };
   };
 };
+
+export type User = {
+  id?: string;
+  username?: string;
+  profilePicture?: string;
+  socialMediaLinks?: {
+    website?: string;
+    github?: string;
+    stackoverflow?: string;
+    linkedin?: string;
+    youtube?: string;
+  };
+};

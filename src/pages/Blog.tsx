@@ -35,7 +35,7 @@ const Blog = (): JSX.Element => {
       (<>
         {posts && !posts.length ? 
         <div className="container text-center">
-          <p className="text-color">No Posts Found with the search term.</p>
+          <p className="text-color">No posts found with the search term.</p>
         </div> : 
           <div className="card-deck card-deck-flex">
             {posts.map((post, id) => {

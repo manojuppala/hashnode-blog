@@ -20,6 +20,9 @@
   --blockquote: #768390;
   --kbd-border: rgba(99, 110, 123, 0.4);
   --pagination: #eee;
+  --alert-warning-bg: #36342e;
+  --alert-text-color: #d1d7e0;
+  --alert-warning-border: #655129;
 }
 [data-theme="light"] {
   --border: #d0d7de;
@@ -213,4 +216,8 @@ img {
 
 .clear-btn:hover {
   color: var(--text-color);
+}
+
+.subscribe-btn {
+  max-height: 2.4rem;
 }

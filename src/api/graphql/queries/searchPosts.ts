@@ -1,13 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query SearchPostsOfPublication(
-    $count: Int!
-    $after: String
-    $sortBy: PostSortBy
-    $filter: SearchPostsOfPublicationFilter!
-  ) {
-    searchPostsOfPublication(first: $count, after: $after, sortBy: $sortBy, filter: $filter) {
+  query SearchPostsOfPublication($count: Int!, $after: String, $filter: SearchPostsOfPublicationFilter!) {
+    searchPostsOfPublication(first: $count, after: $after, filter: $filter) {
       edges {
         node {
           id

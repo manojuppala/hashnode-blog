@@ -5,6 +5,7 @@ type State = {
   publicationId: string;
   newsletterStatus: string;
   newsletterErrorMsg: string;
+  newsletterLoading: boolean;
   loading: boolean;
   pagination: {
     totalPosts: number;
@@ -15,6 +16,21 @@ type State = {
   blogPosts: PostType[];
   homePosts: PostType[];
   searchTerm: string;
+  user: {
+    id?: string;
+    username?: string;
+    profilePicture?: string;
+    bio?: {
+      text?: string;
+    };
+    socialMediaLinks?: {
+      website?: string;
+      github?: string;
+      stackoverflow?: string;
+      linkedin?: string;
+      youtube?: string;
+    };
+  };
 };
 
 type Actions = {
@@ -22,12 +38,14 @@ type Actions = {
   updateNewsletterInfo: (status: string, errorMsg: string) => void;
   updateSearchTerm: (searchTerm: string) => void;
   clearSearchTerm: () => void;
+  clearNewsletterInfo: () => void;
 };
 
 export const useAppStore = create<State & Actions>((set) => ({
   publicationId: '',
   newsletterStatus: '',
   newsletterErrorMsg: '',
+  newsletterLoading: false,
   loading: false,
   pagination: {
     totalPosts: 0,
@@ -38,9 +56,11 @@ export const useAppStore = create<State & Actions>((set) => ({
   blogPosts: [],
   homePosts: [],
   searchTerm: '',
+  user: {},
   updateSearchTerm: (searchTerm: string) => set(() => ({ searchTerm })),
   clearSearchTerm: () => set(() => ({ searchTerm: '' })),
   updatePublicationId: (id: string) => set(() => ({ publicationId: id })),
   updateNewsletterInfo: (status: string, errorMsg: string) =>
-    set(() => ({ newsletterStatus: status, newsletterErrorMsg: errorMsg }))
+    set(() => ({ newsletterStatus: status, newsletterErrorMsg: errorMsg })),
+  clearNewsletterInfo: () => set(() => ({ newsletterStatus: '', newsletterErrorMsg: '' }))
 }));

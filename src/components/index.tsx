@@ -9,3 +9,5 @@ export { default as Loader } from "./Loader";
 export { default as Image } from "./Image";
 export { default as FormattedHTML } from "./FormattedHTML";
 export { default as Newsletter } from "./Newsletter";
+export { default as ButtonLoading } from "./ButtonLoading";
+export { default as AlertWarning } from "./AlertWarning";

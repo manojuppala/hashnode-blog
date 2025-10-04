@@ -40,6 +40,9 @@ export default `
         socialMediaLinks {
         website
         github
+        stackoverflow
+        linkedin
+        youtube
         }
       }
 `;

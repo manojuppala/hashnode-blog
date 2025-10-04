@@ -1,11 +1,14 @@
 import { Link } from "./atoms";
+import { useAppStore } from "../store";
 
 const Footer = () => {
+  const  user  = useAppStore((state) => state.user);
+  const { socialMediaLinks: { github, linkedin, youtube, stackoverflow } = {} } = user || {};
   const socials = {
-      github: "https://github.com/manojuppala",
-      linkedin: "https://linkedin.com/in/manojuppala/",
-      youtube: "https://www.youtube.com/@manojuppala",
-      "stack-overflow": "https://stackoverflow.com/users/11874811/manoj"
+      github,
+      linkedin,
+      youtube,
+      "stack-overflow": stackoverflow
     };
 
   return (

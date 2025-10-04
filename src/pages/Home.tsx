@@ -2,7 +2,6 @@ import { Fragment, type JSX, useEffect } from "react";
 import { BlogCard, Loader, Newsletter } from "../components";
 import { getPublication } from "../api/graphql";
 import { useAppStore } from "../store";
-import logo from "../assets/mario.png";
 import '../styles/Home.css';
 
 const Home = (): JSX.Element => {
@@ -18,19 +17,21 @@ const Home = (): JSX.Element => {
       fetchData();
     }, []);
 
-  const  posts  = useAppStore((state) => state.homePosts);
-  const  loading  = useAppStore((state) => state.loading);
-
+  const posts = useAppStore((state) => state.homePosts);
+  const loading = useAppStore((state) => state.loading);
+  const user = useAppStore((state) => state.user);
   return (
     <Fragment>
+      {user?.profilePicture ? 
       <div className="logo">
-            <img src={logo} className="logo" alt="manojuppala.com" />
-      </div>
+            <img src={user?.profilePicture} className="logo" alt="logo" />
+      </div> : null}
+      {user?.bio?.text ? 
       <div className="text-center">
         <p className="text-color">
-          Email: <a href="mailto:contact@manojuppala.com">contact@manojuppala.com</a>
+          {user?.bio?.text}
         </p>
-      </div>
+      </div> : null}
       {loading ? <Loader /> :
       <>
         <div>

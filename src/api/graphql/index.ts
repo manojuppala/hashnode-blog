@@ -4,12 +4,19 @@ import publicationQuery from '../graphql/queries/publication';
 import postByIdQuery from './queries/postById';
 import postBySlugQuery from './queries/postBySlug';
 import searchPostsQuery from './queries/searchPosts';
+import userQuery from './queries/user';
 import subscribeToNewsletterMutation from './mutations/subscribeToNewsletter';
-import type { Publication as PublicationType, Post as PostType, Newsletter as NewsletterType } from '../../types';
+import type {
+  Publication as PublicationType,
+  Post as PostType,
+  Newsletter as NewsletterType,
+  User as UserType
+} from '../../types';
 import { useAppStore } from '../../store';
 import { formatPost } from './util';
 // import omitDeep from "@types/omit-deep";
 const HOST = import.meta.env.VITE_HASHNODE_HOST;
+const USERNAME = import.meta.env.VITE_HASHNODE_USERNAME;
 const ENDPOINT = 'https://gql.hashnode.com';
 
 const GraphQL = (() => {
@@ -61,6 +68,8 @@ const updatePagination = (pagination: {
 const updateBlogPosts = (posts: PostType[]) => useAppStore.setState({ blogPosts: posts });
 const updateHomePosts = (posts: PostType[]) => useAppStore.setState({ homePosts: posts });
 const setLoading = (loading: boolean) => useAppStore.setState({ loading });
+const setNewsletterLoading = (loading: boolean) => useAppStore.setState({ newsletterLoading: loading });
+const updateUser = (user: UserType) => useAppStore.setState(() => ({ user }));
 
 export const searchPublication = async ({
   count = 10,
@@ -78,7 +87,6 @@ export const searchPublication = async ({
     host?: string;
     after?: string;
     count: number;
-    sortBy?: string;
     filter?: {
       query: string;
       publicationId?: string;
@@ -90,7 +98,6 @@ export const searchPublication = async ({
     });
   const res = (await query({
     count,
-    sortBy: 'DATE_PUBLISHED_DESC',
     ...(after && { after }),
     filter: {
       query: search,
@@ -111,7 +118,6 @@ export const searchPublication = async ({
     if (page === 1 && hasNextPage) {
       const nextPageRes = (await query({
         count,
-        sortBy: 'DATE_PUBLISHED_DESC',
         after: endCursor,
         filter: {
           query: search,
@@ -198,9 +204,18 @@ export const getPostBySlug = async ({ slug }: { slug: string }) => {
   return finalRes;
 };
 
+export const getUser = async () => {
+  const res = (await GraphQL.query({
+    query: userQuery,
+    variables: { username: USERNAME }
+  })) as { user: UserType };
+  updateUser(res?.user);
+};
+
 export const subscribeToNewsletter = async ({ email }: { email: string }): Promise<void> => {
   const publicationId = useAppStore.getState().publicationId;
   try {
+    setNewsletterLoading(true);
     const res = (await GraphQL.mutation({
       mutation: subscribeToNewsletterMutation,
       variables: { input: { publicationId, email } }
@@ -210,7 +225,13 @@ export const subscribeToNewsletter = async ({ email }: { email: string }): Promi
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
-      updateNewsletterInfo('ERROR', error.message);
+      if (error?.message?.includes('invalid')) {
+        updateNewsletterInfo('ERROR', 'Please enter a valid email address.');
+      } else {
+        updateNewsletterInfo('ERROR', error.message);
+      }
     }
+  } finally {
+    setNewsletterLoading(false);
   }
 };
