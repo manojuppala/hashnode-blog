@@ -17,7 +17,7 @@ import { formatPost } from './util';
 // import omitDeep from "@types/omit-deep";
 const HOST = import.meta.env.VITE_HASHNODE_HOST;
 const USERNAME = import.meta.env.VITE_HASHNODE_USERNAME;
-const ENDPOINT = 'https://gql.hashnode.com';
+const ENDPOINT = import.meta.env.VITE_HASHNODE_GQL_ENDPOINT;
 
 const GraphQL = (() => {
   const createClient = (url: string) =>
