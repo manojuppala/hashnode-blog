@@ -1,7 +1,6 @@
 export default `
       id
       slug
-      previousSlugs
       title
       subtitle
       tags {
@@ -14,9 +13,6 @@ export default `
       coverImage {
         url
       }
-      bannerImage {
-        url
-      }
       brief
       readTimeInMinutes
       content {
@@ -25,10 +21,6 @@ export default `
         text
       }
       publishedAt
-      audioUrls {
-        male
-        female
-      }
       seo {
         title
         description
