@@ -7,7 +7,7 @@ const Navbar = () => {
   const [navState, setNavState] = useState(currentNav || "home");
   
 
-  const sections = ["Home", "Blog"];
+  const sections = ["Home", "Blog", "OpenSource"];
 
   const activeClass = "nav-item active text-center px-2nav-item text-center px-2";
   const inActiveClass = "nav-item text-center px-2nav-item text-center px-2";

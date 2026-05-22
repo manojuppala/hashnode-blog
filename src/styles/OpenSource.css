@@ -1,0 +1,66 @@
+@import "./index.css";
+
+.repo-icon {
+  width: 16px;
+  height: 16px;
+  fill: #8b949e;
+}
+
+.repo-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.repo-badge-public {
+  font-size: 0.75rem;
+}
+
+.repo-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.repo-meta {
+  font-size: 0.75rem;
+}
+
+.repo-lang-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.repo-icon-small {
+  width: 14px;
+  height: 14px;
+  fill: #8b949e;
+}
+
+/* Language colors */
+.lang-typescript {
+  background-color: #3178c6;
+}
+
+.lang-javascript {
+  background-color: #f1e05a;
+}
+
+.lang-python {
+  background-color: #3572A5;
+}
+
+.lang-java {
+  background-color: #b07219;
+}
+
+.lang-shell {
+  background-color: #89e051;
+}
+
+.lang-tex {
+  background-color: #3D6117;
+}
+
+.lang-default {
+  background-color: #8b949e;
+}
