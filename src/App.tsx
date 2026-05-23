@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import OpenSource from "./pages/OpenSource";
+import About from "./pages/About";
 import PageNotFound from "./pages/PageNotFound";
 import { useLocation } from "react-router-dom";
 import { getUser } from "./api/graphql";
@@ -31,6 +32,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/*" element={<BlogPost />} />
         <Route path="/opensource" element={<OpenSource />} />
+        <Route path="/about" element={<About />} />
         {/* Catch-all route for 404 */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>

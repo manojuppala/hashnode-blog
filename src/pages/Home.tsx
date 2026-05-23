@@ -19,19 +19,8 @@ const Home = (): JSX.Element => {
 
   const posts = useAppStore((state) => state.homePosts);
   const loading = useAppStore((state) => state.loading);
-  const user = useAppStore((state) => state.user);
   return (
     <Fragment>
-      {user?.profilePicture ? 
-      <div className="logo">
-            <img src={user?.profilePicture} className="logo" alt="logo" />
-      </div> : null}
-      {user?.bio?.text ? 
-      <div className="text-center">
-        <p className="text-color">
-          {user?.bio?.text}
-        </p>
-      </div> : null}
       {loading ? <Loader /> :
       <>
         <div>

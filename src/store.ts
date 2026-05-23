@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { Post as PostType } from './types';
+import type { GitHubRepo } from './api/github';
 
 type State = {
   publicationId: string;
@@ -16,6 +17,10 @@ type State = {
   blogPosts: PostType[];
   homePosts: PostType[];
   searchTerm: string;
+  githubRepos: GitHubRepo[];
+  githubLoading: boolean;
+  githubError: string;
+  repoSortOption: 'updated' | 'name' | 'stars';
   user: {
     id?: string;
     username?: string;
@@ -39,6 +44,10 @@ type Actions = {
   updateSearchTerm: (searchTerm: string) => void;
   clearSearchTerm: () => void;
   clearNewsletterInfo: () => void;
+  setGithubRepos: (repos: GitHubRepo[]) => void;
+  setGithubLoading: (loading: boolean) => void;
+  setGithubError: (error: string) => void;
+  setRepoSortOption: (option: 'updated' | 'name' | 'stars') => void;
 };
 
 export const useAppStore = create<State & Actions>((set) => ({
@@ -56,11 +65,19 @@ export const useAppStore = create<State & Actions>((set) => ({
   blogPosts: [],
   homePosts: [],
   searchTerm: '',
+  githubRepos: [],
+  githubLoading: false,
+  githubError: '',
+  repoSortOption: 'updated',
   user: {},
   updateSearchTerm: (searchTerm: string) => set(() => ({ searchTerm })),
   clearSearchTerm: () => set(() => ({ searchTerm: '' })),
   updatePublicationId: (id: string) => set(() => ({ publicationId: id })),
   updateNewsletterInfo: (status: string, errorMsg: string) =>
     set(() => ({ newsletterStatus: status, newsletterErrorMsg: errorMsg })),
-  clearNewsletterInfo: () => set(() => ({ newsletterStatus: '', newsletterErrorMsg: '' }))
+  clearNewsletterInfo: () => set(() => ({ newsletterStatus: '', newsletterErrorMsg: '' })),
+  setGithubRepos: (repos: GitHubRepo[]) => set(() => ({ githubRepos: repos })),
+  setGithubLoading: (loading: boolean) => set(() => ({ githubLoading: loading })),
+  setGithubError: (error: string) => set(() => ({ githubError: error })),
+  setRepoSortOption: (option: 'updated' | 'name' | 'stars') => set(() => ({ repoSortOption: option }))
 }));

@@ -12,7 +12,15 @@
 }
 
 .repo-badge-public {
-  font-size: 0.75rem;
+  font-size: 12px;
+  padding: 0 7px;
+  border-radius: 2em;
+  border: 1px solid var(--border);
+  color: var(--text-color);
+  background: transparent;
+  font-weight: 400;
+  display: inline-block;
+  line-height: 18px;
 }
 
 .repo-description {
@@ -63,4 +71,127 @@
 
 .lang-default {
   background-color: #8b949e;
+}
+
+/* Clickable repo card */
+.repo-card-link {
+  text-decoration: none !important;
+  display: block;
+  color: inherit;
+}
+
+.repo-card-link:hover {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.repo-card-link:hover * {
+  text-decoration: none !important;
+}
+
+/* Sort dropdown */
+.repo-sort-container {
+  position: relative;
+  display: inline-block;
+}
+
+.repo-sort-container .btn {
+  padding: 3px 10px;
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.repo-sort-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.8);
+  min-width: 300px;
+  z-index: 100;
+}
+
+.repo-sort-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.repo-sort-close {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  opacity: 0.7;
+}
+
+.repo-sort-close:hover {
+  background-color: var(--nav-bg-hover);
+  opacity: 1;
+}
+
+.repo-sort-options {
+  padding: 8px 0;
+}
+
+.repo-sort-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+}
+
+.repo-sort-option:hover {
+  background-color: var(--nav-bg-hover);
+}
+
+.repo-sort-option.active {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.repo-sort-option .checkmark {
+  width: 16px;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* Show more button */
+.show-more-btn {
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.show-more-btn:hover {
+  background-color: var(--nav-bg-hover);
 }

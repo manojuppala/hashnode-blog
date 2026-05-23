@@ -7,7 +7,12 @@ const Navbar = () => {
   const [navState, setNavState] = useState(currentNav || "home");
   
 
-  const sections = ["Home", "Blog", "OpenSource"];
+  const sections = [
+    { label: "Home", path: "home" },
+    { label: "Blog", path: "blog" },
+    { label: "Open-source", path: "opensource" },
+    { label: "About", path: "about" }
+  ];
 
   const activeClass = "nav-item active text-center px-2nav-item text-center px-2";
   const inActiveClass = "nav-item text-center px-2nav-item text-center px-2";
@@ -25,15 +30,14 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="collapsibleNavbar">
         <ul className="navbar-nav mx-auto">
           {sections?.map((nav, id) => {
-            const lowercase = nav.toLowerCase();
             return (
-              <li key={id} className={navState === lowercase ? activeClass : inActiveClass}>
+              <li key={id} className={navState === nav.path ? activeClass : inActiveClass}>
                 <Link
                   className="nav-link h5"
-                  to={lowercase === "home" ? "/" : `/${lowercase}`}
-                  onClick={() => setNavState(lowercase)}
+                  to={nav.path === "home" ? "/" : `/${nav.path}`}
+                  onClick={() => setNavState(nav.path)}
                 >
-                  {nav}
+                  {nav.label}
                 </Link>
               </li>
             );
