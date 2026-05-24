@@ -121,7 +121,7 @@ const OpenSource = (): JSX.Element => {
           </div>
 
           {hasMore && (
-            <div className="text-center mt-4">
+            <div className="text-center mt-2">
               {loading ? (
                 <Loader />
               ) : (

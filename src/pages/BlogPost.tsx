@@ -1,7 +1,7 @@
 import { Fragment, type JSX, useEffect, useState } from "react";
 import { getPostBySlug } from "../api/graphql";
 import { Link, useLocation } from "react-router-dom";
-import { Loader, Image, FormattedHTML, Newsletter } from "../components";
+import { Loader, Image, FormattedHTML } from "../components";
 import PageNotFound from "./PageNotFound";
 import { Badge } from "../components/atoms";
 import type { Post as PostType } from "../types";
@@ -71,7 +71,7 @@ const BlogPost = (): JSX.Element => {
           })}
         </div>
     </div>
-    <Newsletter />
+    {/* <Newsletter /> */}
   </>);
 
   return (

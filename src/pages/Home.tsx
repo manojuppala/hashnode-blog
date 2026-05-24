@@ -1,5 +1,5 @@
 import { Fragment, type JSX, useEffect } from "react";
-import { BlogCard, Loader, Newsletter } from "../components";
+import { BlogCard, Loader } from "../components";
 import { getPublication } from "../api/graphql";
 import { useAppStore } from "../store";
 import '../styles/Home.css';
@@ -32,7 +32,7 @@ const Home = (): JSX.Element => {
             })}
           </div>
         </div>
-        <Newsletter />
+        {/* <Newsletter /> */}
       </>}
     </Fragment>
   );
