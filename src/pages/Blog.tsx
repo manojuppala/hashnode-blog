@@ -9,6 +9,7 @@ const postsPerPage = 10;
 const Blog = (): JSX.Element => {
   const posts  = useAppStore((state) => state.blogPosts);
   const loading  = useAppStore((state) => state.loading);
+  const isSearchActive  = useAppStore((state) => state.isSearchActive);
   const clearSearchTerm  = useAppStore((state) => state.clearSearchTerm);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const Blog = (): JSX.Element => {
     }, []);
 
   useEffect(() => {
-    return () => {  
+    return () => {
       clearSearchTerm();
     };
   }, [clearSearchTerm]);
@@ -33,13 +34,13 @@ const Blog = (): JSX.Element => {
       <Searchbar postsPerPage={postsPerPage}/>
       {loading ? <Loader /> :
       (<>
-        {posts && !posts.length ? 
+        {posts && !posts.length ?
         <div className="container text-center">
           <p className="text-color">No posts found with the search term.</p>
-        </div> : 
-          <div className="card-deck card-deck-flex">
+        </div> :
+          <div className={isSearchActive ? "card-deck-flex" : "card-deck-blog"}>
             {posts.map((post, id) => {
-              return <BlogCard key={id} {...post} />;
+              return <BlogCard key={id} {...post} withImage={!isSearchActive} />;
             })}
           </div>
         }

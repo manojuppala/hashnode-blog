@@ -3,6 +3,7 @@ import { BlogCard, Loader, Newsletter } from "../components";
 import { getPublication } from "../api/graphql";
 import { useAppStore } from "../store";
 import '../styles/Home.css';
+import '../styles/Blog.css';
 
 const Home = (): JSX.Element => {
 
@@ -25,7 +26,7 @@ const Home = (): JSX.Element => {
       <>
         <div>
           <h2 className="mb-3">Recent Blogs</h2>
-          <div className="card-deck">
+          <div className="card-deck-blog">
             {posts.map((post, id) => {
               return <BlogCard key={id} {...post} withImage />;
             })}

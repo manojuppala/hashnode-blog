@@ -17,6 +17,7 @@ type State = {
   blogPosts: PostType[];
   homePosts: PostType[];
   searchTerm: string;
+  isSearchActive: boolean;
   githubRepos: GitHubRepo[];
   githubLoading: boolean;
   githubError: string;
@@ -43,6 +44,7 @@ type Actions = {
   updateNewsletterInfo: (status: string, errorMsg: string) => void;
   updateSearchTerm: (searchTerm: string) => void;
   clearSearchTerm: () => void;
+  setSearchActive: (isActive: boolean) => void;
   clearNewsletterInfo: () => void;
   setGithubRepos: (repos: GitHubRepo[]) => void;
   setGithubLoading: (loading: boolean) => void;
@@ -65,13 +67,15 @@ export const useAppStore = create<State & Actions>((set) => ({
   blogPosts: [],
   homePosts: [],
   searchTerm: '',
+  isSearchActive: false,
   githubRepos: [],
   githubLoading: false,
   githubError: '',
   repoSortOption: 'updated',
   user: {},
   updateSearchTerm: (searchTerm: string) => set(() => ({ searchTerm })),
-  clearSearchTerm: () => set(() => ({ searchTerm: '' })),
+  clearSearchTerm: () => set(() => ({ searchTerm: '', isSearchActive: false })),
+  setSearchActive: (isActive: boolean) => set(() => ({ isSearchActive: isActive })),
   updatePublicationId: (id: string) => set(() => ({ publicationId: id })),
   updateNewsletterInfo: (status: string, errorMsg: string) =>
     set(() => ({ newsletterStatus: status, newsletterErrorMsg: errorMsg })),

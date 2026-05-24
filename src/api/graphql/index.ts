@@ -132,6 +132,7 @@ export const searchPublication = async ({
   const publication = res?.publication?.id ?? '';
   updatePublicationId(publication);
   updateBlogPosts(finalRes);
+  useAppStore.setState({ isSearchActive: true });
 };
 
 export const getPublication = async ({ count = 10, page }: { count: number; page?: number }) => {
@@ -142,6 +143,8 @@ export const getPublication = async ({ count = 10, page }: { count: number; page
     }
     return;
   }
+  // Clear search active flag when loading normal posts
+  useAppStore.setState({ isSearchActive: false });
   const pagination = useAppStore.getState().pagination;
   const after = pagination?.cursor?.[String(page)];
   const query = (variables: { host: string; count: number; after?: string }) =>

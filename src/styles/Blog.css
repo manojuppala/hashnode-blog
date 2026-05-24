@@ -19,6 +19,23 @@
   flex-direction: column;
 }
 
+.card-deck-blog {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.15rem 1.85rem;
+}
+
+.card-deck-blog .cards-fixed-width2 {
+  max-width: none;
+}
+
+/* Responsive - single column on mobile */
+@media (max-width: 768px) {
+  .card-deck-blog {
+    grid-template-columns: 1fr;
+  }
+}
+
 .card-border {
   border-color: var(--border);
 }
