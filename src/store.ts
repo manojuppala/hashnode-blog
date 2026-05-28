@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Post as PostType } from './types';
+import type { Post as PostType, Series as SeriesType } from './types';
 import type { GitHubRepo } from './api/github';
 
 type State = {
@@ -16,8 +16,34 @@ type State = {
   };
   blogPosts: PostType[];
   homePosts: PostType[];
+  homeSeriesList: SeriesType[];
+  seriesList: SeriesType[];
   searchTerm: string;
   isSearchActive: boolean;
+  seriesPagination: {
+    totalSeries: number;
+    currentPage: number;
+    cursor: Record<string, string>;
+    hasNextPage: boolean;
+  };
+  seriesDetail: {
+    id: string;
+    name: string;
+    slug: string;
+    description?: {
+      markdown?: string;
+      html?: string;
+      text?: string;
+    };
+    coverImage?: string;
+    posts: PostType[];
+  } | null;
+  seriesPostsPagination: {
+    totalPosts: number;
+    currentPage: number;
+    cursor: Record<string, string>;
+    hasNextPage: boolean;
+  };
   githubRepos: GitHubRepo[];
   githubLoading: boolean;
   githubError: string;
@@ -66,8 +92,23 @@ export const useAppStore = create<State & Actions>((set) => ({
   },
   blogPosts: [],
   homePosts: [],
+  homeSeriesList: [],
+  seriesList: [],
   searchTerm: '',
   isSearchActive: false,
+  seriesPagination: {
+    totalSeries: 0,
+    currentPage: 1,
+    hasNextPage: false,
+    cursor: {}
+  },
+  seriesDetail: null,
+  seriesPostsPagination: {
+    totalPosts: 0,
+    currentPage: 1,
+    hasNextPage: false,
+    cursor: {}
+  },
   githubRepos: [],
   githubLoading: false,
   githubError: '',

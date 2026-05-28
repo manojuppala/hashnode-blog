@@ -5,12 +5,21 @@ import { Badge } from "./atoms";
 import type { Post as PostType } from "../types";
 import '../styles/BlogCard.css';
 
-const BlogCard = (props: PostType): JSX.Element => {
-  const { title, brief, coverImage: { url:coverImg } = {}, publishedAt, readTimeInMinutes, tags, slug, withImage = false } = props;
+interface BlogCardProps extends PostType {
+  seriesSlug?: string;
+}
+
+const BlogCard = (props: BlogCardProps): JSX.Element => {
+  const { title, brief, coverImage: { url:coverImg } = {}, publishedAt, readTimeInMinutes, tags, slug, withImage = false, seriesSlug } = props;
   const formattedDate = moment(publishedAt).format('MMM D, YYYY');
   const location = useLocation();
   const currentNav = location?.pathname?.split("/")[1];
-  const toLink = (currentNav === "blog") ? slug : `blog/${slug}`;
+
+  // If seriesSlug is provided, link to series context
+  const toLink = seriesSlug
+    ? `/series/${seriesSlug}/${slug}`
+    : (currentNav === "blog") ? slug : `blog/${slug}`;
+
   return (
       <div className={`card text-white bg-dark mb-3 ${withImage ? "cards-fixed-width2" : "cards-fixed-width"} card-border anchor-div`}>
         {withImage ?

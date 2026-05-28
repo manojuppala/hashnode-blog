@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
   const currentNav = location?.pathname?.split("/")[1];
   const [navState, setNavState] = useState(currentNav || "home");
-  
+
+  // Update navState when location changes
+  useEffect(() => {
+    setNavState(currentNav || "home");
+  }, [currentNav]);
 
   const sections = [
     { label: "Home", path: "home" },

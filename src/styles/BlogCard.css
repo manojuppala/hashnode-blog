@@ -3,3 +3,15 @@
 .plain-link {
   text-decoration: none !important;
 }
+
+.series-description {
+  display: inline;
+}
+
+.series-description > div {
+  display: inline;
+}
+
+.series-description > div > * {
+  display: inline;
+}

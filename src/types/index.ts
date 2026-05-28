@@ -10,6 +10,34 @@ export type Publication = {
       totalDocuments?: number;
     };
     post?: Post;
+    seriesList?: {
+      edges?: { node: Series }[];
+      pageInfo?: {
+        hasNextPage?: boolean;
+        endCursor?: string;
+      };
+      totalDocuments?: number;
+    };
+    series?: {
+      id: string;
+      name: string;
+      slug: string;
+      cuid?: string;
+      description?: {
+        markdown?: string;
+        html?: string;
+        text?: string;
+      };
+      coverImage?: string;
+      posts?: {
+        edges?: { node: Post }[];
+        pageInfo?: {
+          hasNextPage?: boolean;
+          endCursor?: string;
+        };
+        totalDocuments?: number;
+      };
+    };
   };
   searchPostsOfPublication?: {
     edges?: { node: Post }[];
@@ -73,4 +101,16 @@ export type User = {
     linkedin?: string;
     youtube?: string;
   };
+};
+
+export type Series = {
+  id: string;
+  name: string;
+  slug: string;
+  description?: {
+    markdown?: string;
+    html?: string;
+    text?: string;
+  };
+  coverImage?: string;
 };

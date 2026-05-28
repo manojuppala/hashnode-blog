@@ -1,7 +1,7 @@
 import { Fragment, type JSX, useEffect, useState } from "react";
 import { getPostBySlug } from "../api/graphql";
-import { Link, useLocation } from "react-router-dom";
-import { Loader, Image, FormattedHTML } from "../components";
+import { useLocation, useParams } from "react-router-dom";
+import { Loader, Image, FormattedHTML, Breadcrumb } from "../components";
 import PageNotFound from "./PageNotFound";
 import { Badge } from "../components/atoms";
 import type { Post as PostType } from "../types";
@@ -11,6 +11,9 @@ import '../styles/Blog.css';
 
 const BlogPost = (): JSX.Element => {
   const location = useLocation();
+  const { seriesSlug } = useParams<{ seriesSlug?: string }>();
+  const seriesDetail = useAppStore((state) => state.seriesDetail);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,20 +36,22 @@ const BlogPost = (): JSX.Element => {
   const formattedDate = moment(publishedAt).format('MMM D, YYYY');
   const contentHtml = post?.content?.html;
 
+  // Determine breadcrumb based on context
+  const breadcrumbItems = seriesSlug && seriesDetail
+    ? [
+        { label: 'Home', path: '/' },
+        { label: 'Series', path: '/series' },
+        { label: seriesDetail.name, path: `/series/${seriesSlug}` },
+        { label: title }
+      ]
+    : [
+        { label: 'Blog', path: '/blog' },
+        { label: title }
+      ];
+
   const htmlToRender = (
   <>
-  <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <Link to={"/blog"}>
-              Blog
-            </Link>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            {title}
-          </li>
-        </ol>
-      </nav>
+  <Breadcrumb items={breadcrumbItems} />
     <div>
           {coverImage?.url ? 
           <Image

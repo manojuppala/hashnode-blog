@@ -1,6 +1,8 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import type { OperationVariables } from '@apollo/client';
 import publicationQuery from '../graphql/queries/publication';
+import publicationSeriesListQuery from './queries/publicationSeries';
+import seriesQuery from './queries/series';
 import postByIdQuery from './queries/postById';
 import postBySlugQuery from './queries/postBySlug';
 import searchPostsQuery from './queries/searchPosts';
@@ -10,7 +12,8 @@ import type {
   Publication as PublicationType,
   Post as PostType,
   Newsletter as NewsletterType,
-  User as UserType
+  User as UserType,
+  Series as SeriesType
 } from '../../types';
 import { useAppStore } from '../../store';
 import { formatPost } from './util';
@@ -67,6 +70,32 @@ const updatePagination = (pagination: {
 }) => useAppStore.setState({ pagination });
 const updateBlogPosts = (posts: PostType[]) => useAppStore.setState({ blogPosts: posts });
 const updateHomePosts = (posts: PostType[]) => useAppStore.setState({ homePosts: posts });
+const updateHomeSeries = (homeSeriesList: SeriesType[]) => useAppStore.setState({ homeSeriesList });
+const updateSeriesList = (seriesList: SeriesType[]) => useAppStore.setState({ seriesList });
+const updateSeriesPagination = (pagination: {
+  totalSeries: number;
+  currentPage: number;
+  hasNextPage: boolean;
+  cursor: Record<string, string>;
+}) => useAppStore.setState({ seriesPagination: pagination });
+const updateSeriesCursor = (cursor: Record<string, string>) =>
+  useAppStore.setState((state) => ({ seriesPagination: { ...state.seriesPagination, cursor } }));
+const updateSeriesDetail = (seriesDetail: {
+  id: string;
+  name: string;
+  slug: string;
+  description?: { markdown?: string; html?: string; text?: string };
+  coverImage?: string;
+  posts: PostType[];
+}) => useAppStore.setState({ seriesDetail });
+const updateSeriesPostsPagination = (pagination: {
+  totalPosts: number;
+  currentPage: number;
+  hasNextPage: boolean;
+  cursor: Record<string, string>;
+}) => useAppStore.setState({ seriesPostsPagination: pagination });
+const updateSeriesPostsCursor = (cursor: Record<string, string>) =>
+  useAppStore.setState((state) => ({ seriesPostsPagination: { ...state.seriesPostsPagination, cursor } }));
 const setLoading = (loading: boolean) => useAppStore.setState({ loading });
 const setNewsletterLoading = (loading: boolean) => useAppStore.setState({ newsletterLoading: loading });
 const updateUser = (user: UserType) => useAppStore.setState(() => ({ user }));
@@ -185,6 +214,9 @@ export const getPublication = async ({ count = 10, page }: { count: number; page
     updateBlogPosts(finalRes);
   } else {
     updateHomePosts(finalRes);
+    // Also fetch series list for home page
+    const homeSeriesList = res?.publication?.seriesList?.edges?.map((edge) => edge.node) ?? [];
+    updateHomeSeries(homeSeriesList as SeriesType[]);
   }
 };
 
@@ -213,6 +245,104 @@ export const getUser = async () => {
     variables: { username: USERNAME }
   })) as { user: UserType };
   updateUser(res?.user);
+};
+
+export const getSeriesList = async ({ count = 10, page }: { count: number; page?: number }) => {
+  const seriesPagination = useAppStore.getState().seriesPagination;
+  const after = seriesPagination?.cursor?.[String(page)];
+  const query = (variables: { host: string; count: number; after?: string }) =>
+    GraphQL.query({
+      query: publicationSeriesListQuery,
+      variables
+    });
+  const res = (await query({
+    host: HOST,
+    count,
+    ...(after && { after })
+  })) as PublicationType;
+
+  if (page) {
+    const totalSeries = res?.publication?.seriesList?.totalDocuments ?? 0;
+    const hasNextPage = res?.publication?.seriesList?.pageInfo?.hasNextPage ?? false;
+    const endCursor = res?.publication?.seriesList?.pageInfo?.endCursor;
+    const cursor = { ...seriesPagination?.cursor, [String(page + 1)]: endCursor || '' };
+    updateSeriesPagination({
+      totalSeries,
+      currentPage: page ?? 1,
+      hasNextPage,
+      cursor
+    });
+    if (page === 1 && hasNextPage) {
+      const nextPageRes = (await query({
+        host: HOST,
+        count,
+        after: endCursor
+      })) as PublicationType;
+      const nextPageEndCursor = nextPageRes?.publication?.seriesList?.pageInfo?.endCursor;
+      updateSeriesCursor({ ...cursor, [String(page + 2)]: nextPageEndCursor || '' });
+    }
+  }
+  const seriesList = res?.publication?.seriesList?.edges?.map((edge) => edge.node) ?? [];
+  const publication = res?.publication?.id ?? '';
+  updatePublicationId(publication);
+  updateSeriesList(seriesList as SeriesType[]);
+};
+
+export const getSeries = async ({ slug, count = 10, page }: { slug: string; count: number; page?: number }) => {
+  const seriesPostsPagination = useAppStore.getState().seriesPostsPagination;
+  const after = seriesPostsPagination?.cursor?.[String(page)];
+  const query = (variables: { host: string; slug: string; count: number; after?: string }) =>
+    GraphQL.query({
+      query: seriesQuery,
+      variables
+    });
+  const res = (await query({
+    host: HOST,
+    slug,
+    count,
+    ...(after && { after })
+  })) as PublicationType;
+
+  const series = res?.publication?.series;
+  if (!series) {
+    return;
+  }
+
+  const posts = series?.posts?.edges?.map((edge) => edge.node) ?? [];
+  const publication = res?.publication?.id ?? '';
+  updatePublicationId(publication);
+
+  if (page) {
+    const totalPosts = series?.posts?.totalDocuments ?? 0;
+    const hasNextPage = series?.posts?.pageInfo?.hasNextPage ?? false;
+    const endCursor = series?.posts?.pageInfo?.endCursor;
+    const cursor = { ...seriesPostsPagination?.cursor, [String(page + 1)]: endCursor || '' };
+    updateSeriesPostsPagination({
+      totalPosts,
+      currentPage: page ?? 1,
+      hasNextPage,
+      cursor
+    });
+    if (page === 1 && hasNextPage) {
+      const nextPageRes = (await query({
+        host: HOST,
+        slug,
+        count,
+        after: endCursor
+      })) as PublicationType;
+      const nextPageEndCursor = nextPageRes?.publication?.series?.posts?.pageInfo?.endCursor;
+      updateSeriesPostsCursor({ ...cursor, [String(page + 2)]: nextPageEndCursor || '' });
+    }
+  }
+
+  updateSeriesDetail({
+    id: series.id,
+    name: series.name,
+    slug: series.slug,
+    description: series.description,
+    coverImage: series.coverImage,
+    posts: posts as PostType[]
+  });
 };
 
 export const subscribeToNewsletter = async ({ email }: { email: string }): Promise<void> => {

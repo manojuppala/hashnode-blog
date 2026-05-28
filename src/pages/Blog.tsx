@@ -44,7 +44,7 @@ const Blog = (): JSX.Element => {
             })}
           </div>
         }
-        <Pagination postsPerPage={postsPerPage} />
+        <Pagination itemsPerPage={postsPerPage} type="posts" />
     </>)}
     </Fragment>
   )

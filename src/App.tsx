@@ -4,6 +4,8 @@ import { Footer, Navbar } from './components';
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import SeriesList from "./pages/SeriesList";
+import Series from "./pages/Series";
 import OpenSource from "./pages/OpenSource";
 import About from "./pages/About";
 import PageNotFound from "./pages/PageNotFound";
@@ -24,13 +26,21 @@ function App() {
 
   const location = useLocation();
   const isBlogPost = location.pathname.startsWith("/blog/") && location.pathname !== "/blog/";
+  const isSeriesPage = location.pathname.startsWith("/series");
+
+  // Hide navbar on blog posts and all series pages
+  const shouldHideNavbar = isBlogPost || isSeriesPage;
+
   return (
     <>
-      {!isBlogPost ? <Navbar /> : null}
+      {!shouldHideNavbar ? <Navbar /> : null}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/*" element={<BlogPost />} />
+        <Route path="/series" element={<SeriesList />} />
+        <Route path="/series/:slug" element={<Series />} />
+        <Route path="/series/:seriesSlug/:postSlug" element={<BlogPost />} />
         <Route path="/opensource" element={<OpenSource />} />
         <Route path="/about" element={<About />} />
         {/* Catch-all route for 404 */}
