@@ -1,4 +1,4 @@
-@import "./index.css";
+@import './index.css';
 
 .repo-icon {
   width: 16px;
@@ -54,7 +54,7 @@
 }
 
 .lang-python {
-  background-color: #3572A5;
+  background-color: #3572a5;
 }
 
 .lang-java {
@@ -66,7 +66,11 @@
 }
 
 .lang-tex {
-  background-color: #3D6117;
+  background-color: #3d6117;
+}
+
+.lang-rust {
+  background-color: #dea584;
 }
 
 .lang-default {
